@@ -3,9 +3,9 @@ from typing import Any
 import paho.mqtt.client as mqtt
 from gpiozero import LED
 
-#============================
+#===================================
 # Paramètres
-#============================
+#===================================
 BROKER_HOST = "localhost"
 BROKER_PORT = 1883
 KEEPALIVE_S = 60
@@ -23,9 +23,9 @@ TOPIC_STATE = f"ahuntsic/aec-iot/b3/{TEAM}/{DEVICE}/actuators/led/cmd"
 
 QOS_CMD = 1
 
-#============================
+#===================================
 # Fonctions utilitaires
-#============================
+#===================================
 def publish_led_state(client: mqtt.Client) -> None:
     state = "on" if led.is_lit else "off"
     client.publish(TOPIC_STATE, state, qos=1, retain=True)
@@ -51,9 +51,9 @@ def parse_command(payload_text: str) -> str | None:
         if v in (0, False, "0", "off", "OFF"):
             return "off"
         
-#============================
+#===================================
 # Callback MQTT
-#============================
+#===================================
 def on_connect(client, userdata, flags, reason_code, properties=None):
     print(f"[CONNECT] reason_code={reason_code}")
     if reason_code == 0:
@@ -83,3 +83,16 @@ def on_message(client, userdata, msg: mqtt.MQTTMessage):
 def on_disconnect(client, userdata, reason_code, properties=None):
     print(f"[DISCONNECT] reason_code={reason_code}")
     led.off()
+
+#===================================
+# Démarrage du client MQTT
+#===================================
+client = mqtt.Client(client_id=CLIENT_ID, protocol=mqtt.MQTTv311)
+client.on_connect = on_connect
+client.on_message = on_message
+client.on_disconnect = on_disconnect
+
+client.reconnect_delay_set(min_delay=1, max_delay=30)
+
+client.connect(BROKER_HOST, BROKER_PORT, keepalive=KEEPALIVE_S)
+client.loop_forever()
