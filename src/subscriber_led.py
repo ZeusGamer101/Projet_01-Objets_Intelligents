@@ -47,6 +47,7 @@ def db_connect() -> pymysql.connections.Connection:
         charset="utf8mb4",
     )
 
+db = db_connect()
 
 #===================================
 # Fonctions utilitaires LED
@@ -106,6 +107,40 @@ def try_parse_json(payload_text: str) -> Optional[dict[str, Any]]:
         return obj if isinstance(obj, dict) else None
     except json.JSONDecodeError:
         return None
+
+#===================================
+# Insertion dans la DB
+#===================================
+def insert_telemetry(ts_utc: datetime, device: str, topic:str, payload_text:str) -> None:
+    obj = try_parse_json(payload_text)
+    value = None
+    unit = None
+
+    if obj is not None:
+        if "value" in obj:
+            try:
+                value = float(obj["value"])
+            except (TypeError, ValueError):
+                value = None
+        if "unit" in obj and isinstance(obj["unit"], str):
+            unit = obj["unit"][:16]
+    
+    sql = """
+        INSERT INTO telemetry (ts_utc, device, topic, value, unit, payload)
+        VALUES (%s, %s, %s, %s, %s, %s)        
+        """
+
+    with db.cursor() as cur:
+        cur.execute(sql, (ts_utc, device, topic, value, unit, payload_text))
+
+
+def insert_event(ts_utc:datetime, device:str, topic: str, kind:str, payload_text: str) -> None:
+    sql = """
+        INSERT INTO events (ts_utc, device, topic, kind, payload)
+        VALUES (%s, %s, %s, %s, %s)
+        """
+    with db.cursor() as cur:
+        cur.execute(sql, (ts_utc, device, topic, kind, payload_text))
         
 #===================================
 # Callback MQTT
