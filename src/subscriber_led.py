@@ -2,9 +2,11 @@ import json
 from typing import Any
 import paho.mqtt.client as mqtt
 from gpiozero import LED
+import pymysql
+from datetime import datetime, timezone
 
 #===================================
-# Paramètres
+# Paramètres MQTT
 #===================================
 BROKER_HOST = "localhost"
 BROKER_PORT = 1883
@@ -22,6 +24,28 @@ TOPIC_CMD = f"ahuntsic/aec-iot/b3/{TEAM}/{DEVICE}/actuators/led/cmd"
 TOPIC_STATE = f"ahuntsic/aec-iot/b3/{TEAM}/{DEVICE}/actuators/led/cmd"
 
 QOS_CMD = 1
+
+#===================================
+# Paramètres MariaDB
+#===================================
+DB_HOST = "localhost"
+DB_USER = "iot"
+DB_PASSWORD = "iot"
+DB_NAME = "iot_b3"
+
+def utc_now_naive() -> datetime:
+    return datetime.now(timezone.utc).replace(tzinfo=None)
+
+def db_connect() -> pymysql.connections.Connection:
+    return pymysql.connect(
+        host=DB_HOST,
+        user=DB_USER,
+        password=DB_PASSWORD,
+        database=DB_NAME,
+        autocommit=True,
+        charset="utf8mb4",
+    )
+
 
 #===================================
 # Fonctions utilitaires
