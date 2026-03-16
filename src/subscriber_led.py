@@ -4,6 +4,7 @@ import paho.mqtt.client as mqtt
 from gpiozero import LED
 import pymysql
 from datetime import datetime, timezone
+from typing import Any, Optional
 
 #===================================
 # Paramètres MQTT
@@ -48,7 +49,7 @@ def db_connect() -> pymysql.connections.Connection:
 
 
 #===================================
-# Fonctions utilitaires
+# Fonctions utilitaires LED
 #===================================
 def publish_led_state(client: mqtt.Client) -> None:
     state = "on" if led.is_lit else "off"
@@ -74,6 +75,37 @@ def parse_command(payload_text: str) -> str | None:
             return "on"
         if v in (0, False, "0", "off", "OFF"):
             return "off"
+        
+
+#===================================
+# Fonctions utilitaires DB
+#===================================
+def extract_device(topic: str) -> str:
+    parts = topic.split("/")
+    return parts[4] if len(parts) >= 5 else "unknown"
+
+def is_telemetry(topic: str) -> bool:
+    if "/sensors/" not in topic:
+        return False
+    if topic.endswith("/value"):
+        return False
+    return True
+
+def classify_kind(topic: str) -> str:
+    if "/cmd/" in topic:
+        return "cmd"
+    if "/state/" in topic:
+        return "state"
+    if "/status/" in topic:
+        return "status"
+    return "other"
+
+def try_parse_json(payload_text: str) -> Optional[dict[str, Any]]:
+    try:
+        obj = json.loads(payload_text)
+        return obj if isinstance(obj, dict) else None
+    except json.JSONDecodeError:
+        return None
         
 #===================================
 # Callback MQTT
