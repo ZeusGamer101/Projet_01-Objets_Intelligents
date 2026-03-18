@@ -20,7 +20,7 @@ LED_PIN_BCM = 17
 led = LED(LED_PIN_BCM)
 
 TOPIC_CMD = f"ahuntsic/aec-iot/b3/{TEAM}/{DEVICE}/actuators/led/cmd"
-TOPIC_STATE = f"ahuntsic/aec-iot/b3/{TEAM}/{DEVICE}/actuators/led/cmd"
+TOPIC_STATE = f"ahuntsic/aec-iot/b3/{TEAM}/{DEVICE}/actuators/led/cmd/state"
 
 QOS_CMD = 1
 
@@ -64,9 +64,6 @@ def on_connect(client, userdata, flags, reason_code, properties=None):
         client.subscribe(TOPIC_CMD, qos=QOS_CMD)
         print(f"[SUB] {TOPIC_CMD} (qos={QOS_CMD})")
 
-        client.subscribe(TOPIC_STATE, qos=QOS_CMD)
-        print(f"[SUB] {TOPIC_STATE} (qos={QOS_CMD})")
-        
         publish_led_state(client)
     
     else:
@@ -76,6 +73,7 @@ def on_message(client, userdata, msg: mqtt.MQTTMessage):
     # LED
     payload_text = msg.payload.decode("utf-8", errors="replace")
     print(f"[MSG] topic={msg.topic} qos={msg.qos} retain={msg.retain} payload={payload_text}")
+
     command = parse_command(payload_text)
     if command is None:
         print("[WARN] Commande invalide (JSON attendu). Ignorée.")
