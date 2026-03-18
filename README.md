@@ -1,6 +1,8 @@
 # READ ME - TP1 du cours de *Développement d'objets intelligents*
 
+
 ## 1. Architecture du projet
+
 
 ## 2. Covention de topics
 **Préfixe unique:** ahuntsic/aec-iot/b3/equipe_blondel_martin/piBM
@@ -14,6 +16,7 @@
 **État DEL:** ahuntsic/aec-iot/b3/ equipe_blondel_martin/piBM /actuators/led/state
 
 **Présence:** ahuntsic/aec-iot/b3/ equipe_blondel_martin/piBM /status/online
+
 
 ## 3. Exemples de JSON
 **JSON pour la mesure de la température du CPU:** 
@@ -38,6 +41,7 @@
 **Étape 1:** Importer les fichiers à partir de GitHub et les mettre dans un dossier
 **Étape 2:** Créer un venv dans le dossier où se trouvent les fichiers
 **Étape 3:**  Dans un terminal pyhton, écrire la commande pip install -r requirement.txt
+
 
 ## 5. Procédure de vérification du mosquitto sub/pub
 
