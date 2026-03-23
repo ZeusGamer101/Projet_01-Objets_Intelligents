@@ -4,6 +4,7 @@ import json
 import time
 from datetime import datetime, timezone
 from gpiozero import CPUTemperature
+import random
 
 import paho.mqtt.client as mqtt
 
@@ -41,6 +42,7 @@ PUBLISH_PERIOD_S = 2.0
 def read_temperature_cpu() -> float:
     cpu = CPUTemperature()
     return cpu.temperature
+
 
 
 # ---------------------------------------------------------------------
