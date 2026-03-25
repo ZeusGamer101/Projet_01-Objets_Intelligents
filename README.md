@@ -1,6 +1,4 @@
 # READ ME - TP1 du cours de *Développement d'objets intelligents*
-<br>
-<br>
 
 ## 1. Architecture du projet
 <br>
@@ -58,7 +56,7 @@ Pour tester le **subscriber**, il faut mettre cette ligne de code dans un autre 
 <br>
 <br>
 
-## 6. Prodcédure de vérification du MariaDB
+## 6. Procédure de vérification du MariaDB
 **Code pour montrer les 10 dernières valeurs**<br>
 SELECT id, ts_utc, device, topic, value, unit<br>
 FROM telemetry<br>
