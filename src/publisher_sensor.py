@@ -19,10 +19,10 @@ KEEPALIVE_S = 60
 TEAM = "equipe_blondel_martin"
 DEVICE = "piBM"
 
-CLIENT_ID = "b3-sub-piBM-led"
+CLIENT_ID = "b3-pub-piBM-led"
 
-TOPIC_JSON = f"ahuntsic/aec-iot/b3/{TEAM}/{DEVICE}/sensors/temperature"
-TOPIC_VALUE = f"ahuntsic/aec-iot/b3/{TEAM}/{DEVICE}/sensors/temperature/value"
+TOPIC_JSON = f"ahuntsic/aec-iot/b3/{TEAM}/{DEVICE}/sensors/cpu"
+TOPIC_VALUE = f"ahuntsic/aec-iot/b3/{TEAM}/{DEVICE}/sensors/cpu/value"
 
 # Statut "online/offline" pratique en IoT (peut �tre affich� aussi dans un dashboard)
 TOPIC_ONLINE = f"ahuntsic/aec-iot/b3/{TEAM}/{DEVICE}/status/online"
