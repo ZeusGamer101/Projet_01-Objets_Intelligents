@@ -19,10 +19,28 @@
 <br>
 <br>
 
-## 3. Exemples de JSON
+## 3. Descriptions des abonnements et des publications
+**subscriber_led.py**
+  - S'abonne à *Commande DEL* <br>
+  - Publie l'état de actuel de la LED sur *État DEL* <br>
+
+**publisher_sensor.py**<br>
+  - S'abonne à rien<br>
+  - Publie la température en JSON et la température en valeur brute<br>
+
+**logger_mariadb.py**
+  - S'abonne à tout les topics<br>
+  - Publie rien<br>
+
+**Application mobile**
+  - S'abonne à *État DEL* et *Valeur brute*<br>
+  - Publie *Commande DEL*<br>
+ 
+
+## 4. Exemples de JSON
 **JSON pour la mesure de la température du CPU:** <br>
 {
-"device": "piBM",<br>
+"device_id": "piBM",<br>
 "sensor": "CPU",<br>
 "value": 47.00,<br>
 "unit": "C",<br>
@@ -39,7 +57,7 @@
 <br>
 <br>
 
-## 4. Procédure d'installation
+## 5. Procédure d'installation
 **Étape 1**: Installer Mosquitto (broker) et les clients avec la ligne de commande *sudo apt install -y mosquitto mosquitto-clients*<br>
 **Étape 2**: Démarrer le service avec la ligne de commande *sudo systemctl enable --now mosquitto*<br>
 **Étape 3**: Vérifier que le servoce tourne avec la ligne de commande *systemctl status mosquitto --no-pager*<br>
@@ -50,13 +68,13 @@
 <br>
 <br>
 
-## 5. Procédure de vérification du mosquitto sub/pub
+## 6. Procédure de vérification du mosquitto sub/pub
 Pour tester le **publisher**, il faut mettre cette ligne de code dans un terminal: *mosquitto_pub -h localhost -t 'test/hello' -m 'Bonjour MQTT'* <br>
 Pour tester le **subscriber**, il faut mettre cette ligne de code dans un autre terminal: *mosquitto_sub -h localhost -t 'test/hello' -v*<br>
 <br>
 <br>
 
-## 6. Procédure de vérification du MariaDB
+## 7. Procédure de vérification du MariaDB
 **Code pour montrer les 10 dernières valeurs**<br>
 SELECT id, ts_utc, device, topic, value, unit<br>
 FROM telemetry<br>
