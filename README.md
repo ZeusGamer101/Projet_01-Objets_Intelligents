@@ -82,7 +82,7 @@ FROM telemetry<br>
 ORDER BY id DESC<br>
 LIMIT 10;<br>
 <br>
-**Code pour montrer les 10 derniers évènements**
+**Code pour montrer les 10 derniers évènements**<br>
 SELECT id, ts_utc, device, kind, topic, payload<br>
 FROM events<br>
 ORDER BY id DESC<br>
