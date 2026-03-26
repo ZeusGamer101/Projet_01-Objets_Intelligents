@@ -71,6 +71,7 @@
 ## 6. Procédure de vérification du mosquitto sub/pub
 Pour tester le **publisher**, il faut mettre cette ligne de code dans un terminal: *mosquitto_pub -h localhost -t 'test/hello' -m 'Bonjour MQTT'* <br>
 Pour tester le **subscriber**, il faut mettre cette ligne de code dans un autre terminal: *mosquitto_sub -h localhost -t 'test/hello' -v*<br>
+Comme résultat attendu, le subscriber est supposé afficher "Bonjour" <br>
 <br>
 <br>
 
