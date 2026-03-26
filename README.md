@@ -19,7 +19,7 @@
 <br>
 <br>
 
-## 3. Descriptions des abonnements et des publications
+## 3. Descriptions des subscribers et des publishers
 **subscriber_led.py**
   - S'abonne à *Commande DEL* <br>
   - Publie l'état de actuel de la LED sur *État DEL* <br>
