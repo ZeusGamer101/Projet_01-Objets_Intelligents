@@ -122,6 +122,9 @@ def on_connect(client,_userdata,_flags,reason_code,properties=None):
 def on_message(_client,_userdate,msg: mqtt.MQTTMessage):
     topic = msg.topic
     payload_text= msg.payload.decode("utf-8", errors="replace")
+    if topic.endswith("/value"):
+        print(f"[SKIP] Ignored value topic: {topic}")
+        return
     device = extract_device(topic)
     ts = utc_now_naive().isoformat() + "Z"
 
