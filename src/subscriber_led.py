@@ -46,7 +46,6 @@ def parse_command(payload_text: str) -> str | None:
     Cela facilite la lecture et l'interpétation des commandes par le programme
     """
 
-
     try:
         data: dict[str, Any] = json.loads(payload_text)
     except json.JSONDecodeError: # Gestion d'exception: la commande n'est pas un fromat JSON
