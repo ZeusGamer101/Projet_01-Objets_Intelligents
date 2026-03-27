@@ -9,15 +9,15 @@
 ## 2. Covention de topics
 **Préfixe unique:** ahuntsic/aec-iot/b3/equipe_blondel_martin/piBM<br>
 
-**Télémetrie JSON:** ahuntsic/aec-iot/b3/equipe_blondel_martin/piBM/sensors/temperature<br>
+**Télémetrie JSON:** ahuntsic/aec-iot/b3/equipe_blondel_martin/piBM/sensors/cpu<br>
 
-**Valeur brute:** ahuntsic/aec-iot/b3/ equipe_blondel_martin/piBM /sensors/temperature/value<br>
+**Valeur brute:** ahuntsic/aec-iot/b3/equipe_blondel_martin/piBM /sensors/cpu/value<br>
 
-**Commande DEL:** ahuntsic/aec-iot/b3/ equipe_blondel_martin/piBM /actuators/led/cmd<br>
+**Commande DEL:** ahuntsic/aec-iot/b3/equipe_blondel_martin/piBM /actuators/led/cmd<br>
 
-**État DEL:** ahuntsic/aec-iot/b3/ equipe_blondel_martin/piBM /actuators/led/state<br>
+**État DEL:** ahuntsic/aec-iot/b3/equipe_blondel_martin/piBM /actuators/led/state<br>
 
-**Présence:** ahuntsic/aec-iot/b3/ equipe_blondel_martin/piBM /status/online<br>
+**Présence:** ahuntsic/aec-iot/b3/equipe_blondel_martin/piBM /status/online<br>
 <br>
 <br>
 
@@ -71,8 +71,9 @@
 <br>
 
 ## 6. Procédure de vérification du mosquitto sub/pub
-D'abord, il faut ouvrir un premier terminal Rasberry PI qui va servir de subscriber. Il faut y mettre la ligne de commande suivante: *mosquitto_sub -h localhost -t 'ahuntsic/aec-iot/b3/ equipe_blondel_martin/piBM /sensors/temperature/value' -v*. Puis, il faut ouvrir un deuxième terminal qui va servir de publisher. Dans ce terminal, il faut mettre la ligne de commande: *mosquitto_pub -h localhost -t 'ahuntsic/aec-iot/b3/ equipe_blondel_martin/piBM /sensors/temperature/value' -m '20'*.<br>
-Le reusltat attendu est de voir la valeur 20 dans le terminal subscriber
+**Étape 1**:Executer cette commande pour s'abonner sur le topic :mosquitto_sub -h localhost -t 'ahuntsic/aec-iot/b3/equipe_blondel_martin/piBM/sensors/cpu/value' -v <br>
+**Étape 2**: Être sur la branche ~/Projet_01-Objets_Intelligents 3 et executer cette commande pour publier sur le topic *sudo python src/publisher_sensor.py 4*.
+**Étape 3**: Exemple du resultat attendu sur le terminal du subscriber : ahuntsic/aec-iot/b3/equipe_blondel_martin/piBM/sensors/cpu/value 46.85
 <br>
 <br>
 
