@@ -78,18 +78,8 @@ Comme résultat attendu, le subscriber est supposé afficher "Bonjour" <br>
 <br>
 
 ## 7. Procédure de vérification du MariaDB
-**Code pour montrer les 10 dernières valeurs**<br>
-SELECT id, ts_utc, device, topic, value, unit<br>
-FROM telemetry<br>
-ORDER BY id DESC<br>
-LIMIT 10;<br>
-<br>
-**Code pour montrer les 10 derniers évènements**<br>
-SELECT id, ts_utc, device, kind, topic, payload<br>
-FROM events<br>
-ORDER BY id DESC<br>
-LIMIT 10;<br>
-<br>
-**Code pour montrer le voulume**<br>
-SELECT (SELECT COUNT(*) FROM telemetry) AS n_telemetry,<br>
-(SELECT COUNT(*) FROM events) AS n_events;<br>
+Pour valider que la DB fonctionne, il faut mettre dans un terminal les lignes de commandes suivantes: <br>
+SHOW TABLES; <br>
+DESCRIBE telemetry; <br>
+DESCRIBE events; <br>
+Le résultat attendu est de voir 2 tables avec leurs colonnes respectives. <br>
