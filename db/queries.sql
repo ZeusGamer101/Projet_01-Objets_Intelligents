@@ -5,7 +5,7 @@ ORDER BY id DESC
 LIMIT 10;
 
 -- 2) 10 derniers événements
-SELECT id, ts_utc, device, kind, topic, payload
+SELECT id, ts_utc, device, topic, payload
 FROM events
 ORDER BY id DESC
 LIMIT 10;
