@@ -1,9 +1,10 @@
 from __future__ import annotations
 
 import json
-import random
 import time
 from datetime import datetime, timezone
+from gpiozero import CPUTemperature
+import random
 
 import paho.mqtt.client as mqtt
 
@@ -18,10 +19,10 @@ KEEPALIVE_S = 60
 TEAM = "equipe_blondel_martin"
 DEVICE = "piBM"
 
-CLIENT_ID = "b3-sub-piBM-led"
+CLIENT_ID = "b3-pub-piBM-led"
 
-TOPIC_JSON = f"ahuntsic/aec-iot/b3/{TEAM}/{DEVICE}/sensors/temperature"
-TOPIC_VALUE = f"ahuntsic/aec-iot/b3/{TEAM}/{DEVICE}/sensors/temperature/value"
+TOPIC_JSON = f"ahuntsic/aec-iot/b3/{TEAM}/{DEVICE}/sensors/cpu"
+TOPIC_VALUE = f"ahuntsic/aec-iot/b3/{TEAM}/{DEVICE}/sensors/cpu/value"
 
 # Statut "online/offline" pratique en IoT (peut �tre affich� aussi dans un dashboard)
 TOPIC_ONLINE = f"ahuntsic/aec-iot/b3/{TEAM}/{DEVICE}/status/online"
@@ -38,8 +39,10 @@ PUBLISH_PERIOD_S = 2.0
 # 2) Lecture capteur (� brancher sur VOTRE code du cours pr�c�dent)
 # ---------------------------------------------------------------------
 
-def read_temperature_c() -> float:
-    return round(20.0 + random.random() * 5.0, 2)
+def read_temperature_cpu() -> float:
+    cpu = CPUTemperature()
+    return cpu.temperature
+
 
 
 # ---------------------------------------------------------------------
@@ -101,12 +104,12 @@ try:
             time.sleep(1.0)
             continue
     
-        temperature_c = read_temperature_c()
+        cpu_temp = read_temperature_cpu()
 
         payload = {
             "device_id": DEVICE,
-            "sensor" : "temperature",
-            "value" : temperature_c,
+            "sensor" : "CPU",
+            "value" : cpu_temp,
             "unit" : "C",
             "ts" : datetime.now(timezone.utc).isoformat()
         }
@@ -115,7 +118,7 @@ try:
         client.publish(TOPIC_JSON,json.dumps(payload),qos=QOS_SENSOR,retain=False)
 
         # 2) Valeur simple (facile pour dashboards)
-        client.publish(TOPIC_VALUE,str(temperature_c),qos=QOS_SENSOR,retain=False)
+        client.publish(TOPIC_VALUE,str(cpu_temp),qos=QOS_SENSOR,retain=False)
 
         print(f"[PUB] {TOPIC_JSON} -> {payload}")
         time.sleep(PUBLISH_PERIOD_S)
