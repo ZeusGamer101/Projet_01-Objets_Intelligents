@@ -71,9 +71,8 @@
 <br>
 
 ## 6. Procédure de vérification du mosquitto sub/pub
-Pour tester le **publisher**, il faut mettre cette ligne de code dans un terminal: *mosquitto_pub -h localhost -t 'test/hello' -m 'Bonjour MQTT'* <br>
-Pour tester le **subscriber**, il faut mettre cette ligne de code dans un autre terminal: *mosquitto_sub -h localhost -t 'test/hello' -v*<br>
-Comme résultat attendu, le subscriber est supposé afficher "Bonjour" <br>
+D'abord, il faut ouvrir un premier terminal Rasberry PI qui va servir de subscriber. Il faut y mettre la ligne de commande suivante: *mosquitto_sub -h localhost -t 'ahuntsic/aec-iot/b3/ equipe_blondel_martin/piBM /sensors/temperature/value' -v*. Puis, il faut ouvrir un deuxième terminal qui va servir de publisher. Dans ce terminal, il faut mettre la ligne de commande: *mosquitto_pub -h localhost -t 'ahuntsic/aec-iot/b3/ equipe_blondel_martin/piBM /sensors/temperature/value' -m '20'*.<br>
+Le reusltat attendu est de voir la valeur 20 dans le terminal subscriber
 <br>
 <br>
 
