@@ -72,7 +72,7 @@
 
 ## 6. Procédure de vérification du mosquitto sub/pub
 **Étape 1**:Executer cette commande pour s'abonner sur le topic :mosquitto_sub -h localhost -t 'ahuntsic/aec-iot/b3/equipe_blondel_martin/piBM/sensors/cpu/value' -v <br>
-**Étape 2**: Être sur la branche ~/Projet_01-Objets_Intelligents 3 et executer cette commande pour publier sur le topic *sudo python src/publisher_sensor.py 4*.
+**Étape 2**: Être sur la branche ~/Projet_01-Objets_Intelligents 3 et executer cette commande pour publier sur le topic *sudo python src/publisher_sensor.py 4*. <br>
 **Étape 3**: Exemple du resultat attendu sur le terminal du subscriber : ahuntsic/aec-iot/b3/equipe_blondel_martin/piBM/sensors/cpu/value 46.85
 <br>
 <br>
