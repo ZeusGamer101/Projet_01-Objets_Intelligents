@@ -56,7 +56,7 @@ def extract_device(topic:str) -> str:
 def is_telemetry(topic:str) -> bool:
     if "/sensors/" not in topic:
         return False
-    if topic.endswith("/value/"):
+    if topic.endswith("/value"):
         return False
     return True
 
@@ -79,7 +79,7 @@ def try_parse_json(payload_text: str) -> Optional[dict[str,Any]]:
 # -----------------------------
 # 4) INSERT en BD (SQL param�tr�)
 # -----------------------------
-def insert_telemetry(ts_utc: datetime,device:str,topic:str,payload_text:str) -> None:
+def insert_telemetry(ts_utc: str,device:str,topic:str,payload_text:str) -> None:
     obj = try_parse_json(payload_text)
     value = None
     unit = None
@@ -94,20 +94,19 @@ def insert_telemetry(ts_utc: datetime,device:str,topic:str,payload_text:str) -> 
             unit = obj["unit"][:16]
 
     sql = """
-        INSERT INTO telemetry (ts_utc, device, topic, value, unit, payload)
-        VALUES (%s, %s, %s, %s, %s, %s)
-    """
-    with db.cursor() as cur:
-        cur.execute(sql,(ts_utc,device,topic,value,unit,payload_text))
-
-def insert_event(ts_utc: datetime, device:str,topic:str,kind:str,
-payload_text: str) -> None:
-    sql = """
-        INSERT INTO events (ts_utc, device, topic, kind, payload)
+        INSERT INTO telemetry (device, topic, value, unit, ts_utc)
         VALUES (%s, %s, %s, %s, %s)
     """
     with db.cursor() as cur:
-        cur.execute(sql,(ts_utc,device,topic,kind,payload_text))
+        cur.execute(sql,(device,topic,value,unit,ts_utc))
+
+def insert_event(device:str,topic:str, payload_text: str, ts_utc: str) -> None:
+    sql = """
+        INSERT INTO events (device, topic, payload,ts_utc)
+        VALUES (%s, %s, %s, %s)
+    """
+    with db.cursor() as cur:
+        cur.execute(sql,(device,topic,payload_text,ts_utc))
 
 # -----------------------------
 # 5) Callbacks MQTT
@@ -124,16 +123,15 @@ def on_message(_client,_userdate,msg: mqtt.MQTTMessage):
     topic = msg.topic
     payload_text= msg.payload.decode("utf-8", errors="replace")
     device = extract_device(topic)
-    ts = utc_now_naive()
+    ts = utc_now_naive().isoformat() + "Z"
 
     try:
         if is_telemetry(topic):
             insert_telemetry(ts,device,topic,payload_text)
             print(f"[DB] telemetry <- {topic}")
         else:
-            kind = classify_kind(topic)
-            insert_event(ts,device,topic,kind,payload_text)
-            print(f"[DB] telemetry <- {topic}")
+            insert_event(device,topic,payload_text,ts)
+            print(f"[DB] event <- {topic}")
 
     except pymysql.MySQLError as e:
         print(f"[DB-ERROR] {e} -> reconnexion")

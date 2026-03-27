@@ -20,7 +20,7 @@ LED_PIN_BCM = 17
 led = LED(LED_PIN_BCM)
 
 TOPIC_CMD = f"ahuntsic/aec-iot/b3/{TEAM}/{DEVICE}/actuators/led/cmd"
-TOPIC_STATE = f"ahuntsic/aec-iot/b3/{TEAM}/{DEVICE}/actuators/led/cmd/state"
+TOPIC_STATE = f"ahuntsic/aec-iot/b3/{TEAM}/{DEVICE}/actuators/led/state"
 
 QOS_CMD = 1
 
