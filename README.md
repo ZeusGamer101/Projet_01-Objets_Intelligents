@@ -53,7 +53,7 @@
 {
 "device": "piBM",<br>
 "actuator": "led",<br>
-"state": "on",<br>
+"payload": "on",<br>
 "ts": "2026-02-25T19:23:01.501Z"<br>
 }
 <br>
