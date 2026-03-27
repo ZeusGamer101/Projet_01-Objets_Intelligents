@@ -1,8 +1,8 @@
 # READ ME - TP1 du cours de *Développement d'objets intelligents*
-<img width="1302" height="583" alt="image" src="https://github.com/user-attachments/assets/e122f02a-1917-4de2-b8f1-d10071104bfe" />
-
 
 ## 1. Architecture du projet
+<img width="1302" height="583" alt="image" src="https://github.com/user-attachments/assets/e122f02a-1917-4de2-b8f1-d10071104bfe" />
+
 <br>
 <br>
 
