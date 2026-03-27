@@ -28,7 +28,7 @@
 
 **publisher_sensor.py**<br>
   - S'abonne à rien<br>
-  - Publie la température en JSON et la température en valeur brute<br>
+  - Publie la température en JSON et la température en valeur brute sur *Télémetrie JSON* et sur *Valeur brute*<br>
 
 **logger_mariadb.py**
   - S'abonne à tout les topics<br>
@@ -36,7 +36,7 @@
 
 **Application mobile**
   - S'abonne à *État DEL* et *Valeur brute*<br>
-  - Publie *Commande DEL*<br>
+  - Publie sur *Commande DEL*<br>
  
 
 ## 4. Exemples de JSON
