@@ -79,7 +79,7 @@ Comme résultat attendu, le subscriber est supposé afficher "Bonjour" <br>
 
 ## 7. Procédure de vérification du MariaDB
 Pour valider que la DB fonctionne, il faut mettre dans un terminal les lignes de commandes suivantes: <br>
-SHOW TABLES; <br>
-DESCRIBE telemetry; <br>
-DESCRIBE events; <br>
+*SHOW TABLES;* <br>
+*DESCRIBE telemetry;* <br>
+*DESCRIBE events;* <br>
 Le résultat attendu est de voir 2 tables avec leurs colonnes respectives. <br>
